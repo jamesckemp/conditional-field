@@ -2,7 +2,7 @@ class ConditionalField {
   constructor(args){
     this.$control = $(args.control);
 
-    if(this.$control.length == 0) return;
+    if(this.$control.length <= 0) return;
 
     this.args = args;
     this.inputType = this.getInputType();
@@ -13,13 +13,13 @@ class ConditionalField {
   }
 
   onChange(e) {
-    var value = this.inputValue();
+    let value = this.inputValue();
     this.setVisible(value);
   }
 
   setVisible(value) {
     for(let controlValue in this.args.visibility){
-      if(value == controlValue){
+      if(value.toString() === controlValue.toString()){
         $(this.args.visibility[controlValue]).show();
       }else{
         $(this.args.visibility[controlValue]).hide();

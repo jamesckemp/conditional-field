@@ -10,7 +10,7 @@ var ConditionalField = function () {
 
     this.$control = $(args.control);
 
-    if (this.$control.length == 0) return;
+    if (this.$control.length <= 0) return;
 
     this.args = args;
     this.inputType = this.getInputType();
@@ -30,7 +30,7 @@ var ConditionalField = function () {
     key: 'setVisible',
     value: function setVisible(value) {
       for (var controlValue in this.args.visibility) {
-        if (value == controlValue) {
+        if (value.toString() === controlValue.toString()) {
           $(this.args.visibility[controlValue]).show();
         } else {
           $(this.args.visibility[controlValue]).hide();
