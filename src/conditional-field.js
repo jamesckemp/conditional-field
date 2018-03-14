@@ -53,7 +53,7 @@ class ConditionalField {
   }
 
   inputValue($control) {
-    let inputType = this.getInputType($control),
+    let inputType = ConditionalField.getInputType($control),
         value = '';
     switch(inputType){
       case 'checkbox':

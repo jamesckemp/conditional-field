@@ -55,7 +55,7 @@ var ConditionalField = function () {
   }, {
     key: 'inputValue',
     value: function inputValue($control) {
-      var inputType = this.getInputType($control),
+      var inputType = ConditionalField.getInputType($control),
           value = '';
       switch (inputType) {
         case 'checkbox':
