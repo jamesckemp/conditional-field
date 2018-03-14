@@ -258,6 +258,11 @@ tbody tr:nth-child(odd) {
   display: block;
   margin-bottom: 10px; }
 
+.form-items {
+  margin-bottom: 30px; }
+  .form-items:last-child {
+    margin-bottom: 0; }
+
 .form-item {
   margin-bottom: 20px; }
   .form-item:last-child {

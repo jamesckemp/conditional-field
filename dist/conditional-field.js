@@ -8,66 +8,82 @@ var ConditionalField = function () {
   function ConditionalField(args) {
     _classCallCheck(this, ConditionalField);
 
-    this.$control = $(args.control);
+    this.$controls = $(args.control);
 
-    if (this.$control.length <= 0) return;
+    if (this.$controls.length <= 0) return;
 
     this.args = args;
-    this.inputType = this.getInputType();
-    this.setVisible(this.inputValue());
+    this.args.parent = this.args.parent || false;
+
+    this.setAllVisible();
 
     this.onChangeBound = this.onChange.bind(this);
-    this.$control.on('change', this.onChangeBound);
+    this.$controls.on('change', this.onChangeBound);
   }
 
   _createClass(ConditionalField, [{
     key: 'onChange',
     value: function onChange(e) {
-      var value = this.inputValue();
-      this.setVisible(value);
+      var $control = $(e.target);
+      this.setVisible($control);
     }
   }, {
     key: 'setVisible',
-    value: function setVisible(value) {
+    value: function setVisible($control) {
+      var value = this.inputValue($control);
+      console.log($control);
+      console.log(value);
       for (var controlValue in this.args.visibility) {
+        var $element = this.args.parent ? $control.closest(this.args.parent).find(this.args.visibility[controlValue]) : $(this.args.visibility[controlValue]);
+
         if (value.toString() === controlValue.toString()) {
-          $(this.args.visibility[controlValue]).show();
+          $element.show();
         } else {
-          $(this.args.visibility[controlValue]).hide();
+          $element.hide();
         }
       }
     }
   }, {
-    key: 'getInputType',
-    value: function getInputType() {
-      if (this.$control.is('select')) {
-        return 'select';
-      } else if (this.$control.is(':radio')) {
-        return 'radio';
-      } else if (this.$control.is(':checkbox')) {
-        return 'checkbox';
-      }
+    key: 'setAllVisible',
+    value: function setAllVisible() {
+      var _this = this;
+
+      this.$controls.each(function (index, control) {
+        _this.setVisible($(control));
+      });
     }
   }, {
     key: 'inputValue',
-    value: function inputValue() {
-      var value = '';
-      switch (this.inputType) {
+    value: function inputValue($control) {
+      var inputType = this.getInputType($control),
+          value = '';
+      switch (inputType) {
         case 'checkbox':
-          value = this.$control.is(':checked') ? 'on' : 'off';
+          value = $control.is(':checked') ? 'on' : 'off';
           break;
         case 'radio':
-          value = this.$control.filter(':checked').val();
+          value = this.$controls.filter(':checked').val();
           break;
         default:
-          value = this.$control.val();
+          value = $control.val();
       }
       return value;
     }
   }, {
     key: 'destroy',
     value: function destroy() {
-      this.$control.off('change', this.onChangeBound);
+      this.$controls.off('change', this.onChangeBound);
+    }
+  }], [{
+    key: 'getInputType',
+    value: function getInputType($control) {
+      if ($control.is('select')) {
+        return 'select';
+      } else if ($control.is(':radio')) {
+        return 'radio';
+      } else if ($control.is(':checkbox')) {
+        return 'checkbox';
+      }
     }
   }]);
 

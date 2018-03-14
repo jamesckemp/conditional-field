@@ -194,6 +194,141 @@
         </div>
       </div>
 
+      <div class="sample sample--select section">
+        <h3>Select (with Parent)</h3>
+        <div class="code">
+          <div class="code--header">
+            Example
+          </div>
+
+          <div class="code--body">
+            <div class="form-items">
+              <h3>Group 1</h3>
+              <div class="form-item">
+                <label>Select Payment Method:</label>
+                <select class="select-field-parent">
+                  <option value="credit">Credit Card</option>
+                  <option value="check">Check</option>
+                </select>
+              </div>
+
+              <div class="credit">
+                <div class="form-item">
+                  <label>Card Number:</label>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="check">
+                <label>Check number:</label>
+                <input type="text" name="check_number" />
+              </div>
+            </div>
+            <div class="form-items">
+              <h3>Group 2</h3>
+              <div class="form-item">
+                <label>Select Payment Method:</label>
+                <select class="select-field-parent">
+                  <option value="credit">Credit Card</option>
+                  <option value="check">Check</option>
+                </select>
+              </div>
+
+              <div class="credit">
+                <div class="form-item">
+                  <label>Card Number:</label>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="check">
+                <label>Check number:</label>
+                <input type="text" name="check_number" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code--header">
+            HTML
+          </div>
+
+          <div class="code--body">
+            <pre class="language-markup"><code>
+              <xmp>
+
+                <div class="form-items">
+              <h3>Group 1</h3>
+              <div class="form-item">
+                <label>Select Payment Method:</label>
+                <select class="select-field-parent">
+                  <option value="credit">Credit Card</option>
+                  <option value="check">Check</option>
+                </select>
+              </div>
+
+              <div class="credit">
+                <div class="form-item">
+                  <label>Card Number:</label>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="check">
+                <label>Check number:</label>
+                <input type="text" name="check_number" />
+              </div>
+            </div>
+
+            <div class="form-items">
+              <h3>Group 2</h3>
+              <div class="form-item">
+                <label>Select Payment Method:</label>
+                <select class="select-field-parent">
+                  <option value="credit">Credit Card</option>
+                  <option value="check">Check</option>
+                </select>
+              </div>
+
+              <div class="credit">
+                <div class="form-item">
+                  <label>Card Number:</label>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="check">
+                <label>Check number:</label>
+                <input type="text" name="check_number" />
+              </div>
+            </div>
+
+              </xmp>
+            </code></pre>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code--header">
+            Javascript
+          </div>
+
+          <div class="code--body">
+            <pre><code class="language-javascript">
+              new ConditionalField({
+                control: '.select-field-parent',
+                parent: '.form-items',
+                visibility: {
+                  'credit': '.credit',
+                  'check': '.check'
+                }
+              });
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
       <div class="sample sample--radio section">
         <h3>Radio Button</h3>
 

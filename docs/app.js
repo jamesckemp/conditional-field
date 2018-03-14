@@ -1,8 +1,17 @@
 new ConditionalField({
   control: '.select-field',
   visibility: {
-   'credit': '.sample--select .credit',
-   'check': '.sample--select .check'
+    'credit': '.sample--select .credit',
+    'check': '.sample--select .check'
+  }
+});
+
+new ConditionalField({
+  control: '.select-field-parent',
+  parent: '.form-items',
+  visibility: {
+    'credit': '.credit',
+    'check': '.check'
   }
 });
 

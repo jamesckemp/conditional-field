@@ -1,58 +1,74 @@
 class ConditionalField {
   constructor(args){
-    this.$control = $(args.control);
+    this.$controls = $(args.control);
 
-    if(this.$control.length <= 0) return;
+    if(this.$controls.length <= 0) return;
 
     this.args = args;
-    this.inputType = this.getInputType();
-    this.setVisible(this.inputValue());
+    this.args.parent = this.args.parent || false;
+
+    this.setAllVisible();
 
     this.onChangeBound = this.onChange.bind(this);
-    this.$control.on('change', this.onChangeBound);
+    this.$controls.on('change', this.onChangeBound);
   }
 
   onChange(e) {
-    let value = this.inputValue();
-    this.setVisible(value);
+    let $control = $(e.target);
+    this.setVisible($control);
   }
 
-  setVisible(value) {
+  setVisible($control) {
+    const value = this.inputValue($control);
+	  console.log($control);
+	  console.log(value);
     for(let controlValue in this.args.visibility){
+      const $element =
+        this.args.parent ?
+        $control.closest( this.args.parent ).find( this.args.visibility[ controlValue ] ) :
+        $( this.args.visibility[ controlValue ] );
+
       if(value.toString() === controlValue.toString()){
-        $(this.args.visibility[controlValue]).show();
+          $element.show();
       }else{
-        $(this.args.visibility[controlValue]).hide();
+          $element.hide();
       }
     }
   }
 
-  getInputType() {
-    if(this.$control.is('select')){
+  setAllVisible() {
+    this.$controls.each( ( index, control ) => {
+      this.setVisible($(control));
+    });
+  }
+
+  static getInputType($control) {
+    if($control.is('select')){
       return 'select';
-    }else if(this.$control.is(':radio')){
+    }else if($control.is(':radio')){
       return 'radio';
-    }else if(this.$control.is(':checkbox')){
+    }else if($control.is(':checkbox')){
       return 'checkbox';
     }
   }
 
-  inputValue() {
-    let value = '';
-    switch(this.inputType){
+  inputValue($control) {
+    let inputType = this.getInputType($control),
+        value = '';
+    switch(inputType){
       case 'checkbox':
-        value = this.$control.is(':checked') ? 'on' : 'off';
+        value = $control.is(':checked') ? 'on' : 'off';
         break;
       case 'radio':
-        value = this.$control.filter(':checked').val();
+        value = this.$controls.filter(':checked').val();
         break;
       default:
-        value = this.$control.val();
+        value = $control.val();
     }
     return value;
   }
 
   destroy() {
-    this.$control.off('change', this.onChangeBound);
+    this.$controls.off('change', this.onChangeBound);
   }
 }
