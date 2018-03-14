@@ -31,8 +31,6 @@ var ConditionalField = function () {
     key: 'setVisible',
     value: function setVisible($control) {
       var value = this.inputValue($control);
-      console.log($control);
-      console.log(value);
       for (var controlValue in this.args.visibility) {
         var $element = this.args.parent ? $control.closest(this.args.parent).find(this.args.visibility[controlValue]) : $(this.args.visibility[controlValue]);
 
@@ -53,9 +51,20 @@ var ConditionalField = function () {
       });
     }
   }, {
+    key: 'getInputType',
+    value: function getInputType($control) {
+      if ($control.is('select')) {
+        return 'select';
+      } else if ($control.is(':radio')) {
+        return 'radio';
+      } else if ($control.is(':checkbox')) {
+        return 'checkbox';
+      }
+    }
+  }, {
     key: 'inputValue',
     value: function inputValue($control) {
-      var inputType = ConditionalField.getInputType($control),
+      var inputType = this.getInputType($control),
           value = '';
       switch (inputType) {
         case 'checkbox':
@@ -73,17 +82,6 @@ var ConditionalField = function () {
     key: 'destroy',
     value: function destroy() {
       this.$controls.off('change', this.onChangeBound);
-    }
-  }], [{
-    key: 'getInputType',
-    value: function getInputType($control) {
-      if ($control.is('select')) {
-        return 'select';
-      } else if ($control.is(':radio')) {
-        return 'radio';
-      } else if ($control.is(':checkbox')) {
-        return 'checkbox';
-      }
     }
   }]);
 

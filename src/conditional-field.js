@@ -20,8 +20,6 @@ class ConditionalField {
 
   setVisible($control) {
     const value = this.inputValue($control);
-	  console.log($control);
-	  console.log(value);
     for(let controlValue in this.args.visibility){
       const $element =
         this.args.parent ?
@@ -42,7 +40,7 @@ class ConditionalField {
     });
   }
 
-  static getInputType($control) {
+  getInputType($control) {
     if($control.is('select')){
       return 'select';
     }else if($control.is(':radio')){
@@ -53,7 +51,7 @@ class ConditionalField {
   }
 
   inputValue($control) {
-    let inputType = ConditionalField.getInputType($control),
+    let inputType = this.getInputType($control),
         value = '';
     switch(inputType){
       case 'checkbox':
